@@ -15,7 +15,7 @@ module Coronapp
   def self.get(options = {})
       country = options.fetch(:country).upcase
       date = options.fetch(:date).strftime("%-m/%-d/%y")
-      stat = options.fetch(:stat).to_sym
+      stat = options.fetch(:stat).downcase.to_sym
       url = "https://api.thevirustracker.com/free-api?countryTimeline=#{country}"
       s = Stat.new
       result = open(url).read
