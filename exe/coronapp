@@ -1,3 +1,38 @@
 #!/usr/bin/env ruby
 
+require "bundler/setup"
 require "coronapp"
+require "optparse"
+require "optparse/date"
+
+options = {}
+
+parser = OptionParser.new do |opt|
+    opt.on("-c", "--country [VALUE]", "[AU = Australia, etc.]") do |location|
+        options[:country] = location
+    end
+    
+    opt.on("-d", "--date [DATE]", String) do |date|
+        options[:date] = date
+    end
+
+    opt.on("-s", "--stat [VALUE]", String) do |statistic|
+        options[:stat] = statistic
+    end
+
+    opt.on("-h", "--help", "[Shows this message]") do 
+        puts opt
+        exit
+    end
+
+
+end
+
+begin
+    parser.parse!
+    puts "There were #{Coronapp.get(options)} on this day"
+rescue OptionParser::InvalidArgument => e
+    puts %Q[#{e.message.capitalize}. Run "#{File.basename($0)}" --help for details.]
+rescue KeyError
+    puts %Q[Insufficient arguments. Run "#{File.basename($0)}" --help for details.]
+end
