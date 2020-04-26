@@ -1,4 +1,6 @@
 require "coronapp/version"
+require "open-uri"
+require "json"
 
 module Coronapp
   class Error < StandardError; end
