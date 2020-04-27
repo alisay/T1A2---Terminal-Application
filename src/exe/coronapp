@@ -92,6 +92,7 @@ parser = OptionParser.new do |opt|
 
 end
 
+#def method
 begin
     parser.parse!
     puts "There were #{Coronapp.get(options)} on this day"
