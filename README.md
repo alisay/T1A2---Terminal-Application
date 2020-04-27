@@ -164,21 +164,41 @@ The user will learn how to interact with the application through a README file a
 
 ## Implementation Plan
 
-See [trello board](https://trello.com/invite/b/pc6pvNan/539072041e9035a6fe2a3abbf52086e8/coronapp) for implementation plan. 
+The things I need to do to make this app are listed below. As I researched how to do these things and then incorporated the results into my code (while continuously testing to ensure performance was as expected), I checked off the items from the list below in trello. 
 
-## Status Updates
+* Learn how to use github to version control my work
+* Write a readme and software development plan including features. 
+* Make a control flow diagram of how I expect the app to work.
+* Write some tests using rspec about how I expect the program to work
+* Learn how to make an executable file that takes arguments from the command line using ARGV
+* Find an API that will provide corona virus statistics I am interested in.
+* Understand the structure of the API and which options I will need to require from the user in order to return a sensible result. 
+* Find a way to make an http call to the API and return the results as json
+* Find a way to parse the result
+* Fix the errors that the gem is throwing because of its basic settings
+* Write a function which takes the arguments and returns the number I am interested in. 
+* Find a way of taking arguments from the command line 
+* Find a way of generating a help menu 
+* Learn how to make a gem using bundle gem coronapp to create a sensible file structure for my app.
+* Make a way of caching results 
+* Find a way of validating dates entered to ensure that people aren't entering from before or after data exists
 
-#### 21 April 2020
+See [trello board](https://trello.com/invite/b/pc6pvNan/539072041e9035a6fe2a3abbf52086e8/coronapp) for further details. 
 
-I am confused about whether the main scraping method should be wrapped in a module or a class. Zeb gives feedback that a module should be used where it's a static method that can be repurposed elsewhere in the program or a single instance of an object. He suggests that if I want to have a class I could have a way of caching the data from each time I scrape the website by saving it to a file. This file could then instantiate an object that populates a hash using country/date data as the key, and scraped data as the value. (I think this is what he said but my scribbles are pretty unclear). I spend a long time working out how to use a gem called vcr which can save websites to a "cassettes" folder. I work out how to set the configurations for vcr and write a module that can be imported into the search class which checks that each "cassette" doesn't already exist, and it is great but then I realise I could have done the same thing with a single line of code which is easier anyway because I can't figure out how to change the configuration settings in order to save the cassettes as JSON instead of YAML and I don't know how to read the YAML file and I am tired. 
+## Manual Testing 
 
-#### 25 April 2020
-
-I decide it's time to work out how to call another method within the self.method I have within my scrape module so that I can take input of which statistic the user wants returned by using a hash with user input as key and the string that's used on the website I'm scraping as value. What a sentence. This takes a surprisingly long time because I don't know how to google. I keep getting an error that says the 
-```bash 
-undefined method `get_stat' for Corona:Module (NoMethodError)
-```
-It's not undefined! I defined it right there above the method that's calling it as part of the JSON parse thing. Eventually I think I search for "call function inside module ruby self function" which leads me to a Stack Overflow question which is unhelpful except for some fellow called 'bin-tom' who says something in the comments about defining private methods before you use them and then I google what a private method is and then I find out that I can make a class within a module that deals with logic so that the module spits out the right data with the method I'm actually calling in the option parser part of the program. Why is this so complicated? I just want to deal with functions in order and not have to think about who is interfacing with what please. Anyway the important thing is that it works now and I only forgot to put inverted commas around strings about 5000 times in the process. 
+**Test**|**Expected Outcome**|**Actual Outcome**
+:-----:|:-----:|:-----:
+I enter a search for Australia |A json file is saved to the cache folder which contains the data from the australia webpage |As expected
+I enter a search for Australia a second time|The json file above is not modified|As expected
+I manually remove the date in my search from the saved Australia cache and search again|The json file above is updated to include the date again|As expected
+I enter a search for -c "AU" -d "20 April 2020" -s "deaths"|I will be returned the string "There were 0 new daily deaths on this day"|As expected
+I enter a search for -c "AU" -d "40 April 2020" -s "deaths"|I will be returned the message "Invalid argument: -d 40 april 2020. Run "coronapp" --help for details."|As expected
+I enter a search for -c "AU" -d  "20 Fleburary 2020" -s "deaths"|I will be returned the message "Invalid argument: -d 20 Fleburary 2020. Run "coronapp" --help for details."|FAIL - returned "There were  new daily deaths on this day" Fix this!
+I call the help menu|The help menu is returned|As expected
+I call the app without any arguments|I receive the message "Insufficient arguments. Run "coronapp" --help for details."|As expected
+I enter a search for -c "XX" -d "20 April 2020" -s "toll"|Mate, I hope it breaks but I'm pretty sure it's not going to because I don't have data validation for this|FAIL - as expected, not having a way of handling this meant that it wasn't handled
+I enter a search for --cOuNtRy "uS" --dAtE "24/02/2020" -sTaT "tOtAl"|I will be returned the message "There were 51 total cases on this day"|As expected
 
 ## Development
 
