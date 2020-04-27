@@ -5,9 +5,11 @@ require "coronapp"
 require "optparse"
 require "optparse/date"
 
+
 options = {}
 
 parser = OptionParser.new do |opt|
+      
     opt.on("-c", "--country [VALUE]", "[COUNTRY CODES]
 
     AF Afghanistan      DE Germany          PK Pakistan
@@ -75,7 +77,7 @@ parser = OptionParser.new do |opt|
     ") do |location|
         options[:country] = location
     end
-    
+        
     opt.on("-d", "--date [DATE]", Date) do |date|
         options[:date] = date
     end
@@ -100,4 +102,6 @@ rescue OptionParser::InvalidArgument => e
     puts %Q[#{e.message.capitalize}. Run "#{File.basename($0)}" --help for details.]
 rescue KeyError
     puts %Q[Insufficient arguments. Run "#{File.basename($0)}" --help for details.]
+rescue RuntimeError
+    puts %Q[Please use a valid country code. Run "#{File.basename($0)}" --help for details.]
 end
