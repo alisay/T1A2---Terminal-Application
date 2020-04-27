@@ -22,3 +22,4 @@ module Coronapp
       return "#{JSON.parse(result).dig("timelineitems",0, date, s.get_stat(stat))} #{s.get_stat(stat).gsub("_", " ")}"
   end
 end
+
