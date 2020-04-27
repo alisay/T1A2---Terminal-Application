@@ -94,7 +94,6 @@ end
 
 begin
     parser.parse!
-    system("clear")
     puts "There were #{Coronapp.get(options)} on this day"
 rescue OptionParser::InvalidArgument => e
     puts %Q[#{e.message.capitalize}. Run "#{File.basename($0)}" --help for details.]
