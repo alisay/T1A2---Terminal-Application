@@ -12,8 +12,8 @@ module Coronapp
       return stat_hash[given_stat]
     end
 
-    def cache(result, country)
-      return File.write("./cache/#{country}.json", result)
+    def cache(result, country, date)
+      return File.write("./cache/#{country}.json", result) unless (File.exist? "./cache/#{country}.json") && (JSON.parse(File.read("./cache/#{country}.json")).dig("timelineitems",0).key?(date))  
     end 
   end  
   
@@ -24,7 +24,7 @@ module Coronapp
       url = "https://api.thevirustracker.com/free-api?countryTimeline=#{country}"
       s = Stat.new
       result = URI.open(url).read
-      s.cache(result, country)
+      s.cache(result, country, date)
       return "#{JSON.parse(File.read("./cache/#{country}.json")).dig("timelineitems",0, date, s.get_stat(stat))} #{s.get_stat(stat).gsub("_", " ")}"
   end
 end
