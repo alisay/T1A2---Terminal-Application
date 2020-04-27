@@ -18,7 +18,7 @@ module Coronapp
       stat = options.fetch(:stat).downcase.to_sym
       url = "https://api.thevirustracker.com/free-api?countryTimeline=#{country}"
       s = Stat.new
-      result = open(url).read
+      result = URI.open(url).read
       return "#{JSON.parse(result).dig("timelineitems",0, date, s.get_stat(stat))} #{s.get_stat(stat).gsub("_", " ")}"
   end
 end
