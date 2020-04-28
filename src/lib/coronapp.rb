@@ -2,6 +2,10 @@ require "coronapp/version"
 require "open-uri"
 require "json"
 
+class
+  CountryError < StandardError
+end
+
 module Coronapp
   class Error < StandardError; end
   
@@ -19,7 +23,7 @@ module Coronapp
     Country = Struct.new(:id, :name)
 
     def validate_country(id)
-      not_found = ->{ raise }
+      not_found = ->{ raise CountryError }
       [ Country.new("AF" , "Afghanistan" ),
       Country.new("AL" , "Albania" ),
       Country.new("DZ" , "Algeria" ),
