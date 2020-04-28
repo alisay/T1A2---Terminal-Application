@@ -6,6 +6,10 @@ class
   CountryError < StandardError
 end
 
+class 
+  DateError < StandardError
+end
+
 module Coronapp
   class Error < StandardError; end
   
@@ -210,11 +214,11 @@ module Coronapp
         end
     end
 
-  #   def validate_country(id)
-  #     country_array = ["AU", "US", "GB"]
-  #     (country_array.include? id) ? return id : raise
-  #   end
-  end  
+    def validate_date(input_date)    
+      too_early = Date.parse("31 December 2019")
+      raise DateError unless (input_date > too_early)
+    end  
+  end
   
   def self.get(options = {})
       country = options.fetch(:country).upcase
@@ -224,6 +228,7 @@ module Coronapp
       s = Stat.new
       result = URI.open(url).read
       s.validate_country(country)
+      s.validate_date(options.fetch(:date))
       s.cache(result, country, date)
       return "#{JSON.parse(File.read("./cache/#{country}.json")).dig("timelineitems",0, date, s.get_stat(stat))} #{s.get_stat(stat).gsub("_", " ")}"
   end
