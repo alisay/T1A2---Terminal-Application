@@ -11,5 +11,6 @@ RSpec.describe Coronapp do
     expect(Coronapp::Stat.new.get_stat(:new)).to be_a_kind_of(String)
   end
 
+  
 end
 
