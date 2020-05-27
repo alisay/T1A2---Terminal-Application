@@ -122,6 +122,13 @@ This is a class for analysing the arguments entered in the command line by the u
 
 This code handles the arguments specified in opt-parse above and returns a string with the scrape module method interpolated. The error handling at this stage rescues an error where there are insufficient arguments and an error where there are invalid arguments and ensures that a well formed error message is returned, which suggests that the user access the help menu.  
 
+4. Elegant error handling
+
+You will find all of your errors handled in the most elegant of ways. Enter insufficient number of arguments in the terminal? Handled, with a polite error message. Enter a country code that does not exist? Handled, with a polite error message. Enter a date before which no person had yet eaten a bat and coronavirus did not exist? You will be astonished yet delighted to know, this is considered an error, and that error is handled. If there are yet errors, I blame the user. 
+
+5. Conditionals
+
+You will find that in the cache function, there is a conditional that provides a json file will only be saved to the computer where this file does not already exist, or the existing file does not have data for the date requested. Is that enough double negatives for you?
 
 ## User Interaction and Experience	 
 
