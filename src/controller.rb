@@ -99,11 +99,11 @@ begin
     parser.parse!
     puts "There were #{Coronapp.get(options)} on this day"
 rescue DateError
-    puts %Q[The date must be this year. Run "#{File.basename($0)}" --help for details.]
+    puts %Q[The date must be this year. Run "ruby #{File.basename($0)}" --help for details.]
 rescue CountryError
-    puts %Q[Please use a valid country code. Run "#{File.basename($0)}" --help for details.]
+    puts %Q[Please use a valid country code. Run "ruby #{File.basename($0)}" --help for details.]
 rescue OptionParser::InvalidArgument => e
-    puts %Q[#{e.message.capitalize}. Run "#{File.basename($0)}" --help for details.]
+    puts %Q[#{e.message.capitalize}. Run "ruby #{File.basename($0)}" --help for details.]
 rescue KeyError
-    puts %Q[Insufficient arguments. Run "#{File.basename($0)}" --help for details.]
+    puts %Q[Insufficient arguments. Run "ruby #{File.basename($0)}" --help for details.]
 end
