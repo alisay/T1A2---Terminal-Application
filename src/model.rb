@@ -1,4 +1,3 @@
-require "coronapp/version"
 require "open-uri"
 require "json"
 
@@ -20,12 +19,14 @@ module Coronapp
       return stat_hash[given_stat]
     end
 
+    #check if the country is cached and cache the information if not. Note - this won't work if you're trying to cache to a folder that doesnt exist
     def cache(result, country, date)
-      return File.write("./cache/#{country}.json", result) unless (File.exist? "./cache/#{country}.json") && (JSON.parse(File.read("./cache/#{country}.json")).dig("timelineitems",0).key?(date))
+      return File.write("#{country}.json", result) unless (File.exist? "#{country}.json") && (JSON.parse(File.read("#{country}.json")).dig("timelineitems",0).key?(date))
     end
 
     Country = Struct.new(:id, :name)
 
+    #this error handling is trash because I copy pasted it wholesale from the opt-parse docs
     def validate_country(id)
       not_found = ->{ raise CountryError }
       [ Country.new("AF" , "Afghanistan" ),
@@ -214,12 +215,14 @@ module Coronapp
         end
     end
 
+    #this makes sure you are putting in a date after the start of coronavirus
     def validate_date(input_date)    
       too_early = Date.parse("31 December 2019")
       raise DateError unless (input_date > too_early)
     end  
   end
   
+  #here is where you access the api and parse the result
   def self.get(options = {})
       country = options.fetch(:country).upcase
       date = options.fetch(:date).strftime("%-m/%-d/%y")
@@ -230,7 +233,7 @@ module Coronapp
       s.validate_country(country)
       s.validate_date(options.fetch(:date))
       s.cache(result, country, date)
-      return "#{JSON.parse(File.read("./cache/#{country}.json")).dig("timelineitems",0, date, s.get_stat(stat))} #{s.get_stat(stat).gsub("_", " ")}"
+      return "#{JSON.parse(File.read("#{country}.json")).dig("timelineitems",0, date, s.get_stat(stat))} #{s.get_stat(stat).gsub("_", " ")}"
   end
 end
 

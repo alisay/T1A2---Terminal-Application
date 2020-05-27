@@ -7,28 +7,23 @@ This application provides a user with information related to the spread of COVID
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'coronapp'
+* You must have Ruby installed.
+* Download the file via zip or git clone into your folder of choice. 
+* In your terminal, navigate into src of this project.
+* Ensure you have installed bundler gem.
+* Run:
+```bash 
+bundle install
 ```
-
-And then execute:
-
-    $ bundle install
-
-Or install it yourself as:
-
-    $ gem install coronapp
 
 ## Usage
 
 This app takes three terminal line arguments: country, date and statistic. 
 
-For example, from the root directory of the Gemfile, you can run:  
+For example, from the src directory, you can run:  
 
 ```bash
-    ./exe/coronapp -c "AU" -d "20 April 2020" -s "toll" 
+    ruby controller.rb -c "AU" -d "20 April 2020" -s "toll" 
 ```
 
 This will return the total deaths from coronavirus in Australia on 20 April this year. 
@@ -36,7 +31,7 @@ This will return the total deaths from coronavirus in Australia on 20 April this
 If you forget these instructions, just run the --help command. 
 
 ```bash
-    ./exe/coronapp -h
+    ruby controller.rb -h
 ```
 
 The available statistics are: 
@@ -134,33 +129,7 @@ The user will learn how to interact with the application through a README file a
 
 ## Control Flow Diagram
 
-```bash
-+-----------+
-|           |                        +----------+
-|  Country  +---------+              |          |
-|           |         |              |  Help!   |
-+-----+-----+         |              |          |
-      |               |              +----------+
-+-----+-----+         |
-|           |         |
-|  Date     +---------+
-|           |         |
-+-----+-----+         |
-      |               |
-+-----+-----+         |
-|           |         |
-| Statistic +---------+
-|           |         |
-+-----------+         |
-                      |
-                      v
-                 +----+----+
-                 |         |
-                 | Result  |
-                 |         |
-                 +---------+
-
-```
+![Control Flow Diagram](./docs/control_flow.svg)
 
 ## Implementation Plan
 
@@ -199,19 +168,3 @@ I call the help menu|The help menu is returned|As expected
 I call the app without any arguments|I receive the message "Insufficient arguments. Run "coronapp" --help for details."|As expected
 I enter a search for -c "XX" -d "20 April 2020" -s "toll"|Mate, I hope it breaks but I'm pretty sure it's not going to because I don't have data validation for this|FAIL - as expected, not having a way of handling this meant that it wasn't handled
 I enter a search for --cOuNtRy "uS" --dAtE "24/02/2020" -sTaT "tOtAl"|I will be returned the message "There were 51 total cases on this day"|As expected
-
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/alisay/coronapp.
-
-
-## License
-
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
-

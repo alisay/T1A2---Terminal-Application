@@ -1,7 +1,7 @@
-#!/usr/bin/env ruby
+#ruby
+#!/usr/bin/env ruby 
 
-require "bundler/setup"
-require "coronapp"
+require "./model.rb"
 require "optparse"
 require "optparse/date"
 
