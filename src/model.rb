@@ -218,7 +218,8 @@ module Coronapp
     #this makes sure you are putting in a date after the start of coronavirus
     def validate_date(input_date)    
       too_early = Date.parse("31 December 2019")
-      raise DateError unless (input_date > too_early)
+      too_late = (Date.today)+1
+      raise DateError unless ((input_date > too_early) && (input_date < too_late))
     end  
   end
   

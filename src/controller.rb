@@ -78,7 +78,7 @@ parser = OptionParser.new do |opt|
         options[:country] = location
     end
         
-    opt.on("-d", "--date [DATE]", Date) do |date|
+    opt.on("-d", "--date [DATE]","[YY/MM/DD preferred]" , Date) do |date|
         options[:date] = date
     end
 
