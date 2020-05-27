@@ -12,6 +12,7 @@ end
 module Coronapp
   class Error < StandardError; end
   
+  # this turns the user input from the terminal into a format that matches the json file 
   class Stat
     def get_stat(given_stat)
       # begin 
@@ -226,7 +227,7 @@ module Coronapp
   #here is where you access the api and parse the result
   def self.get(options = {})
       country = options.fetch(:country).upcase
-      date = options.fetch(:date).strftime("%-m/%-d/%y")
+      date = options.fetch(:date).strftime("%-m/%d/%y")
       stat = options.fetch(:stat).downcase.to_sym
       url = "https://api.thevirustracker.com/free-api?countryTimeline=#{country}"
       s = Stat.new
